@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskListMvvM"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStyle="None" Style="{StaticResource Window.Style}" AllowsTransparency="True">
+        Title="MainWindow" Height="450" Width="800" WindowStyle="None" Style="{StaticResource Window.Style}" AllowsTransparency="True" MouseDown="Window_MouseDown">
     <Window.DataContext>
         <local:ViewModel/>
     </Window.DataContext>
@@ -22,8 +22,8 @@
              <Button Content="Delete" Command="{Binding DeleteCommand}" Style="{StaticResource Button.Style}"/>
              <Button Content="Clear" Command="{Binding ClearCommand}" Style="{StaticResource Button.Style}"/>
             <StackPanel Style="{StaticResource StackPanel.Style}">
-                <Button x:Name="ButtonHide" Content="➖" Style="{StaticResource Button.Small.Style}"/>
-                <Button x:Name="ButtonClose" Content="✖️" Style="{StaticResource Button.Small.Style}"/>
+                <Button x:Name="ButtonHide" Click="ButtonHide_Click" Content="➖" Style="{StaticResource Button.Small.Style}"/>
+                <Button x:Name="ButtonClose" Click="ButtonClose_Click" Content="✖️" Style="{StaticResource Button.Small.Style}"/>
             </StackPanel>
         </UniformGrid>
             <ListBox HorizontalAlignment="Stretch" 
