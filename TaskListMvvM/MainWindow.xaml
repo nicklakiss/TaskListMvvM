@@ -5,30 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskListMvvM"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" WindowStyle="None" Style="{StaticResource Window.Style}" AllowsTransparency="True">
     <Window.DataContext>
         <local:ViewModel/>
     </Window.DataContext>
         <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0.1*"/>
+        </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="0.07*"/>
                 <RowDefinition/>
-                <RowDefinition Height="0.1*"/>
-                <RowDefinition Height="0.2*"/>
-            </Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" Style="{StaticResource StackPanel.Style}">
+             <Button x:Name="ButtonHide" Content="➖" Width="25" Height="25" Style="{StaticResource Button.Style}"/>
+             <Button x:Name="ButtonClose" Content="✖️" Width="25" Height="25" Style="{StaticResource Button.Style}"/>
+        </StackPanel>
+        <UniformGrid Grid.ColumnSpan="1" Rows="1">
+             <Button Content="Add" Command="{Binding AddCommand}" Style="{StaticResource Button.Style}"/>
+             <Button Content="Update Status" Command="{Binding UpdateCommand}" Style="{StaticResource Button.Style}"/>
+             <Button Content="Rename" Command="{Binding ChangeDescriptionCommand}" Style="{StaticResource Button.Style}"/>
+             <Button Content="Delete" Command="{Binding DeleteCommand}" Style="{StaticResource Button.Style}"/>
+             <Button Content="Clear" Command="{Binding ClearCommand}" Style="{StaticResource Button.Style}"/>
+        </UniformGrid>
             <ListBox HorizontalAlignment="Stretch" 
                      ItemsSource="{Binding Tasks}"
-                     SelectedItem="{Binding SelectedItem}"/>
-            <TextBox Grid.Row="1" 
+                     SelectedItem="{Binding SelectedItem}"
+                     ItemTemplate="{StaticResource TaskItem.Template}"
+                     Style="{StaticResource Listbox.Style}"
+                     Grid.Row="1"
+                     Grid.ColumnSpan="2"/>
+            <TextBox Grid.Row="2" 
                      TextAlignment="Left" 
                      VerticalAlignment="Stretch" 
                      VerticalContentAlignment="Center" 
-                     Text="{Binding Description}"/>
-            <UniformGrid Grid.Row="2" Rows="1">
-                <Button Content="Add Task" Command="{Binding AddCommand}"/>
-                <Button Content="Change Task Status" Command="{Binding UpdateCommand}"/>
-                <Button Content="Change Task Description" Command="{Binding ChangeDescriptionCommand}"/>
-                <Button Content="Delete Task" Command="{Binding DeleteCommand}"/>
-                <Button Content="Clear" Command="{Binding ClearCommand}"/>
-            </UniformGrid>
+                     Text="{Binding Description}"
+                     Style="{StaticResource TextBox.Style}"
+                     Grid.ColumnSpan="2"/>
+
         </Grid>
 </Window>

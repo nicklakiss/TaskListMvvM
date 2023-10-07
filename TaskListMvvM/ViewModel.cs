@@ -97,7 +97,6 @@ namespace TaskListMvvM
             _taskItemManager?.ChangeTaskDescription(SelectedItem, Description);
             Description = string.Empty;
             Tasks = new(_taskItemManager.GetTasks());
-
         }
     }
 }
