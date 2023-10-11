@@ -32,7 +32,11 @@ namespace TaskListMvvM
         }
         public TaskItem SelectedItem
         {
-            get { return _selectedItem; }
+            get 
+            {
+                //Description = _selectedItem?.Title;
+                return _selectedItem; 
+            }
             set
             {
                 _selectedItem = value;

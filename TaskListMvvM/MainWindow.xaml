@@ -27,6 +27,7 @@
             </StackPanel>
         </UniformGrid>
             <ListBox HorizontalAlignment="Stretch" 
+                     HorizontalContentAlignment="Stretch"
                      ItemsSource="{Binding Tasks}"
                      SelectedItem="{Binding SelectedItem}"
                      ItemTemplate="{StaticResource TaskItem.Template}"
