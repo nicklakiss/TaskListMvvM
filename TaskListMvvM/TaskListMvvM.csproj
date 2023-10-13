@@ -8,7 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="gtk-media-record_green.png" />
+    <None Remove="gtk-red.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="gtk-media-record_green.png" />
+    <Resource Include="gtk-red.png" />
   </ItemGroup>
 
 </Project>
