@@ -43,7 +43,6 @@
     </Style>
 
     <Style x:Key="StackPanel.Style" TargetType="StackPanel">
-        <Setter Property="Background" Value="#0E1128"/>
         <Setter Property="HorizontalAlignment" Value="Right"/>
         <Setter Property="Orientation" Value="Horizontal"/>
     </Style>
