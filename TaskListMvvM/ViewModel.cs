@@ -11,7 +11,8 @@ namespace TaskListMvvM
 {
     public class ViewModel : VMBase
     {
-        private TaskItemManager _taskItemManager;
+        #region Private Fields
+
         private ObservableCollection<TaskItem> _tasks;
         private RelayCommand _addCommand;
         private RelayCommand _deleteCommand;
@@ -21,21 +22,26 @@ namespace TaskListMvvM
         private string _description;
         private TaskItem _selectedItem;
 
+        #endregion
+        #region Properties
+
         public ObservableCollection<TaskItem> Tasks
         {
-            get { return _tasks; }
+            get => _tasks; 
             set
             {
                 _tasks = value;
                 OnPropertyChanged(nameof(Tasks));
             }
         }
+
         public TaskItem SelectedItem
         {
-            get 
+            get
             {
-                //Description = _selectedItem?.Title;
-                return _selectedItem; 
+                if (string.IsNullOrWhiteSpace(Description))
+                    Description = _selectedItem?.Title;
+                return _selectedItem;
             }
             set
             {
@@ -43,64 +49,76 @@ namespace TaskListMvvM
                 OnPropertyChanged(nameof(SelectedItem));
             }
         }
-        public ICommand AddCommand => _addCommand;
-        public ICommand DeleteCommand => _deleteCommand;
-        public ICommand ClearCommand => _clearCommand;
-        public ICommand UpdateCommand => _updateCommand;
-        public ICommand ChangeDescriptionCommand => _changeDescriptionCommand;
+
         public string Description
         {
-            get { return _description; }
+            get => _description; 
             set
             {
                 _description = value;
                 OnPropertyChanged(nameof(Description));
             }
         }
+        #endregion
+        #region Private Methods
 
-        public ViewModel()
+        private void Add(object o)
         {
-            _taskItemManager = new();
-            Tasks = new(_taskItemManager.GetTasks());
+            if (string.IsNullOrWhiteSpace(Description))
+                return;
+            TaskItemManager.AddTask(new TaskItem { Title = string.Join(" ", Description.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)) });
+            Tasks = new(TaskItemManager.GetTasks());
+            Description = string.Empty;
+        }
+
+        private void Delete(object o)
+        {
+            TaskItemManager.DeleteTask(SelectedItem);
+            Tasks = new(TaskItemManager.GetTasks());
+        }
+
+        private void Clear(object o)
+        {
+            TaskItemManager.Clear();
+            Tasks = new(TaskItemManager.GetTasks());
+        }
+
+        private void Update(object o)
+        {
+            TaskItemManager.UpdateTask(SelectedItem);
+            Tasks = new(TaskItemManager.GetTasks());
+        }
+
+        private void ChangeDescription(object o)
+        {
+            TaskItemManager.ChangeTaskDescription(SelectedItem, Description);
+            Description = string.Empty;
+            Tasks = new(TaskItemManager.GetTasks());
+        }
+
+        private void Init()
+        {
+            Tasks = new(TaskItemManager.GetTasks());
             _addCommand = new(Add);
             _deleteCommand = new(Delete);
             _clearCommand = new(Clear);
             _updateCommand = new(Update);
             _changeDescriptionCommand = new(ChangeDescription);
         }
+        #endregion
+        #region Commands
 
-        private void Add(object o)
-        {
-            if (string.IsNullOrWhiteSpace(Description))
-                return;
-            _taskItemManager.AddTask(new TaskItem { Title = string.Join(" ", Description.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))});
-            Tasks = new(_taskItemManager.GetTasks());
-            Description = string.Empty;
-        }
+        public ICommand AddCommand => _addCommand;
+        public ICommand DeleteCommand => _deleteCommand;
+        public ICommand ClearCommand => _clearCommand;
+        public ICommand UpdateCommand => _updateCommand;
+        public ICommand ChangeDescriptionCommand => _changeDescriptionCommand;
 
-        private void Delete(object o)
+        #endregion
+        
+        public ViewModel()
         {
-            _taskItemManager?.DeleteTask(SelectedItem);
-            Tasks = new(_taskItemManager.GetTasks());
-        }
-
-        private void Clear(object o)
-        {
-            _taskItemManager.Clear();
-            Tasks = new(_taskItemManager.GetTasks());
-        }
-
-        private void Update(object o)
-        {
-            _taskItemManager?.UpdateTask(SelectedItem);
-            Tasks = new(_taskItemManager.GetTasks());
-        }
-
-        private void ChangeDescription(object o)
-        {
-            _taskItemManager?.ChangeTaskDescription(SelectedItem, Description);
-            Description = string.Empty;
-            Tasks = new(_taskItemManager.GetTasks());
+            Init();
         }
     }
 }
