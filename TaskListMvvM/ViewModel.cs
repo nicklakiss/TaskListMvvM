@@ -13,10 +13,11 @@ namespace TaskListMvvM
     {
         private TaskItemManager _taskItemManager;
         private ObservableCollection<TaskItem> _tasks;
+        private RelayCommand _addCommand;
         private RelayCommand _deleteCommand;
         private RelayCommand _clearCommand;
         private RelayCommand _updateCommand;
-        private RelayCommand _enterCommand;
+        private RelayCommand _changeDescriptionCommand;
         private string _description;
         private TaskItem _selectedItem;
 
@@ -33,7 +34,7 @@ namespace TaskListMvvM
         {
             get 
             {
-                Description = _selectedItem?.Title;
+                //Description = _selectedItem?.Title;
                 return _selectedItem; 
             }
             set
@@ -42,10 +43,11 @@ namespace TaskListMvvM
                 OnPropertyChanged(nameof(SelectedItem));
             }
         }
+        public ICommand AddCommand => _addCommand;
         public ICommand DeleteCommand => _deleteCommand;
         public ICommand ClearCommand => _clearCommand;
         public ICommand UpdateCommand => _updateCommand;
-        public ICommand EnterCommand => _enterCommand;
+        public ICommand ChangeDescriptionCommand => _changeDescriptionCommand;
         public string Description
         {
             get { return _description; }
@@ -60,10 +62,11 @@ namespace TaskListMvvM
         {
             _taskItemManager = new();
             Tasks = new(_taskItemManager.GetTasks());
+            _addCommand = new(Add);
             _deleteCommand = new(Delete);
             _clearCommand = new(Clear);
             _updateCommand = new(Update);
-            _enterCommand = new(Enter);
+            _changeDescriptionCommand = new(ChangeDescription);
         }
 
         private void Add(object o)
@@ -89,34 +92,15 @@ namespace TaskListMvvM
 
         private void Update(object o)
         {
+            _taskItemManager?.UpdateTask(SelectedItem);
             Tasks = new(_taskItemManager.GetTasks());
         }
 
         private void ChangeDescription(object o)
         {
-            if (string.IsNullOrWhiteSpace(Description)) return;
-            Description = string.Join(" ", Description.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
-            _taskItemManager?.ChangeTaskDescription(_selectedItem, Description);
+            _taskItemManager?.ChangeTaskDescription(SelectedItem, Description);
             Description = string.Empty;
             Tasks = new(_taskItemManager.GetTasks());
-        }
-
-        private void Enter(object o)
-        {
-            if (o is not null)
-            {
-                if (SelectedItem != null) 
-                {
-                    Description = o as string;
-                    ChangeDescription(o);
-                }
-                else
-                {
-                    Description = o as string;
-                    Add(o);
-                }
-            }
-            
         }
     }
 }
