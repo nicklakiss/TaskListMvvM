@@ -34,7 +34,8 @@ namespace TaskListMvvM
         {
             get 
             {
-                //Description = _selectedItem?.Title;
+                if(string.IsNullOrWhiteSpace(Description))
+                    Description = _selectedItem?.Title;
                 return _selectedItem; 
             }
             set
