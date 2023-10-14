@@ -39,8 +39,7 @@ namespace TaskListMvvM
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(Description))
-                    Description = _selectedItem?.Title;
+                Description = _selectedItem?.Title;
                 return _selectedItem;
             }
             set
@@ -91,7 +90,9 @@ namespace TaskListMvvM
 
         private void ChangeDescription(object o)
         {
-            TaskItemManager.ChangeTaskDescription(SelectedItem, Description);
+            if (string.IsNullOrWhiteSpace(Description)) return;
+            Description = string.Join(" ", Description.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
+            TaskItemManager.ChangeTaskDescription(_selectedItem, Description);
             Description = string.Empty;
             Tasks = new(TaskItemManager.GetTasks());
         }
