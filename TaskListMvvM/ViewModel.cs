@@ -34,7 +34,7 @@ namespace TaskListMvvM
         {
             get 
             {
-                //Description = _selectedItem?.Title;
+                Description = _selectedItem?.Title;
                 return _selectedItem; 
             }
             set
@@ -92,13 +92,14 @@ namespace TaskListMvvM
 
         private void Update(object o)
         {
-            _taskItemManager?.UpdateTask(SelectedItem);
             Tasks = new(_taskItemManager.GetTasks());
         }
 
         private void ChangeDescription(object o)
         {
-            _taskItemManager?.ChangeTaskDescription(SelectedItem, Description);
+            if (string.IsNullOrWhiteSpace(Description)) return;
+            Description = string.Join(" ", Description.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
+            _taskItemManager?.ChangeTaskDescription(_selectedItem, Description);
             Description = string.Empty;
             Tasks = new(_taskItemManager.GetTasks());
         }
