@@ -1,11 +1,13 @@
 ﻿<Window x:Class="TaskListMvvM.MainWindow"
+        x:Name="Window"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskListMvvM"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStyle="None" Style="{StaticResource Window.Style}" AllowsTransparency="True" MouseDown="Window_MouseDown">
+        Title="MainWindow" Height="450" Width="800" WindowStyle="None" Style="{StaticResource Window.Style}" AllowsTransparency="True" MouseDown="Window_MouseDown"
+        Loaded="MainWindow_OnLoaded" Closed="MainWindow_OnClosed">
     <Window.DataContext>
         <local:ViewModel/>
     </Window.DataContext>
@@ -16,29 +18,35 @@
             <RowDefinition Height="0.1*"/>
         </Grid.RowDefinitions>
         <UniformGrid Rows="1">
-            <Button Content="Add" Command="{Binding AddCommand}" Style="{StaticResource Button.Style}"/>
-             <Button Content="Update Status" Command="{Binding UpdateCommand}" Style="{StaticResource Button.Style}"/>
-             <Button Content="Rename" Command="{Binding ChangeDescriptionCommand}" Style="{StaticResource Button.Style}"/>
-             <Button Content="Delete" Command="{Binding DeleteCommand}" Style="{StaticResource Button.Style}"/>
-             <Button Content="Clear" Command="{Binding ClearCommand}" Style="{StaticResource Button.Style}"/>
+            <Button Content="Update Status" Command="{Binding UpdateCommand}" Style="{StaticResource Button.Style}"/>
+            <Button Content="Delete" Command="{Binding DeleteCommand}" Style="{StaticResource Button.Style}"/>
+            <Button Content="Clear" Command="{Binding ClearCommand}" Style="{StaticResource Button.Style}"/>
             <StackPanel Style="{StaticResource StackPanel.Style}">
                 <Button x:Name="ButtonHide" Click="ButtonHide_Click" Content="➖" Style="{StaticResource Button.Small.Style}"/>
                 <Button x:Name="ButtonClose" Click="ButtonClose_Click" Content="✖️" Style="{StaticResource Button.Small.Style}"/>
             </StackPanel>
         </UniformGrid>
-            <ListBox HorizontalAlignment="Stretch" 
+        <ListBox HorizontalAlignment="Stretch" 
                      HorizontalContentAlignment="Stretch"
                      ItemsSource="{Binding Tasks}"
                      SelectedItem="{Binding SelectedItem}"
                      ItemTemplate="{StaticResource TaskItem.Template}"
                      Style="{StaticResource Listbox.Style}"
-                     Grid.Row="1"/>
-            <TextBox Grid.Row="2" 
+                     Grid.Row="1">
+            <ListBox.InputBindings>
+                <KeyBinding Key="Delete" Command="{Binding DeleteCommand}"/>
+            </ListBox.InputBindings>
+        </ListBox>
+        <TextBox x:Name="Box" Grid.Row="2" 
                      TextAlignment="Left" 
                      VerticalAlignment="Stretch" 
                      VerticalContentAlignment="Center" 
                      Text="{Binding Description}"
-                     Style="{StaticResource TextBox.Style}"/>
+                     Style="{StaticResource TextBox.Style}">
+            <TextBox.InputBindings>
+                <KeyBinding Key="Enter" Command="{Binding EnterCommand}" CommandParameter="{Binding ElementName=Box, Path=Text}"/>
+            </TextBox.InputBindings>
+        </TextBox>
 
         </Grid>
 </Window>

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Configuration;
 
 namespace TaskListMvvM
 {
@@ -38,6 +39,17 @@ namespace TaskListMvvM
         private void ButtonHide_Click(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
+        }
+
+        
+        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void MainWindow_OnClosed(object? sender, EventArgs e)
+        {
+            
         }
     }
 }
