@@ -14,11 +14,10 @@ namespace TaskListMvvM
         #region Private Fields
 
         private ObservableCollection<TaskItem> _tasks;
-        private RelayCommand _addCommand;
-        private RelayCommand _deleteCommand;
         private RelayCommand _clearCommand;
         private RelayCommand _updateCommand;
-        private RelayCommand _changeDescriptionCommand;
+        private RelayCommand _enterCommand;
+        private RelayCommand _deleteCommand;
         private string _description;
         private TaskItem _selectedItem;
 
@@ -47,10 +46,7 @@ namespace TaskListMvvM
                 OnPropertyChanged(nameof(SelectedItem));
             }
         }
-        public ICommand DeleteCommand => _deleteCommand;
-        public ICommand ClearCommand => _clearCommand;
-        public ICommand UpdateCommand => _updateCommand;
-        public ICommand EnterCommand => _enterCommand;
+        
         public string Description
         {
             get { return _description; }
@@ -102,45 +98,40 @@ namespace TaskListMvvM
         private void Init()
         {
             Tasks = new(TaskItemManager.GetTasks());
-            _addCommand = new(Add);
-            _deleteCommand = new(Delete);
             _clearCommand = new(Clear);
             _updateCommand = new(Update);
-            _changeDescriptionCommand = new(ChangeDescription);
-		_enterCommand = new(Enter);
+            _enterCommand = new(Enter);
+            _deleteCommand = new(Delete);
         }
         #endregion
         #region Commands
 
-        public ICommand AddCommand => _addCommand;
-        public ICommand DeleteCommand => _deleteCommand;
         public ICommand ClearCommand => _clearCommand;
         public ICommand UpdateCommand => _updateCommand;
-        public ICommand ChangeDescriptionCommand => _changeDescriptionCommand;
+        public ICommand EnterCommand => _enterCommand;
+        public ICommand DeleteCommand => _deleteCommand;
 
         #endregion
-        
+
         public ViewModel()
         {
             Init();
         }
 
-private void Enter(object o)
+        private void Enter(object o)
         {
-            if (o is not null)
+            if (o is null) return;
+            if (SelectedItem != null) 
             {
-                if (SelectedItem != null) 
-                {
-                    Description = o as string;
-                    ChangeDescription(o);
-                }
-                else
-                {
-                    Description = o as string;
-                    Add(o);
-                }
+                Description = o as string;
+                ChangeDescription(o);
             }
-            
+            else
+            {
+                Description = o as string;
+                Add(o);
+            }
+
         }
     }
 }
