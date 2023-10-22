@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskListMvvM"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStyle="None" Style="{StaticResource Window.Style}" AllowsTransparency="True" MouseDown="Window_MouseDown"
+        Title="MainWindow" Height="450" Width="450" WindowStyle="None" Style="{StaticResource Window.Style}" AllowsTransparency="True" MouseDown="Window_MouseDown"
         Loaded="MainWindow_OnLoaded" Closed="MainWindow_OnClosed">
     <Window.DataContext>
         <local:ViewModel/>
