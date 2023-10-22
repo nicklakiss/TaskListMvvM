@@ -34,13 +34,12 @@ namespace TaskListMvvM
                 OnPropertyChanged(nameof(Tasks));
             }
         }
-
         public TaskItem SelectedItem
         {
-            get
+            get 
             {
                 Description = _selectedItem?.Title;
-                return _selectedItem;
+                return _selectedItem; 
             }
             set
             {
@@ -48,10 +47,13 @@ namespace TaskListMvvM
                 OnPropertyChanged(nameof(SelectedItem));
             }
         }
-
+        public ICommand DeleteCommand => _deleteCommand;
+        public ICommand ClearCommand => _clearCommand;
+        public ICommand UpdateCommand => _updateCommand;
+        public ICommand EnterCommand => _enterCommand;
         public string Description
         {
-            get => _description; 
+            get { return _description; }
             set
             {
                 _description = value;
@@ -105,6 +107,7 @@ namespace TaskListMvvM
             _clearCommand = new(Clear);
             _updateCommand = new(Update);
             _changeDescriptionCommand = new(ChangeDescription);
+		_enterCommand = new(Enter);
         }
         #endregion
         #region Commands
@@ -120,6 +123,24 @@ namespace TaskListMvvM
         public ViewModel()
         {
             Init();
+        }
+
+private void Enter(object o)
+        {
+            if (o is not null)
+            {
+                if (SelectedItem != null) 
+                {
+                    Description = o as string;
+                    ChangeDescription(o);
+                }
+                else
+                {
+                    Description = o as string;
+                    Add(o);
+                }
+            }
+            
         }
     }
 }
