@@ -10,15 +10,35 @@
   <ItemGroup>
     <None Remove="gtk-media-record_green.png" />
     <None Remove="gtk-red.png" />
+    <None Remove="icons8-delete-50.png" />
+    <None Remove="list.ico" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.11" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="gtk-media-record_green.png" />
     <Resource Include="gtk-red.png" />
+    <Resource Include="icons8-delete-50.png" />
+    <Resource Include="list.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="AppSettings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AppSettings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="AppSettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>AppSettings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>

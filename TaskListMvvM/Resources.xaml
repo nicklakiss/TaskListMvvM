@@ -55,6 +55,15 @@
         <Setter Property="Background" Value="#0E1128"/>
     </Style>
 
+    <Style x:Key="Button.ToolTip.Style" TargetType="ToolTip">
+        <Setter Property="Background" Value="#0E1128"/>
+        <Setter Property="Foreground" Value="#dbdee3"/>
+        <Setter Property="FontFamily" Value="Bahnschrift Condensed"/>
+        <Setter Property="FontSize" Value="25"/>
+        <Setter Property="HorizontalOffset" Value="15"/>
+        <Setter Property="VerticalOffset" Value="10"/>
+    </Style>
+
     <DataTemplate x:Key="TaskItem.Template" DataType="{x:Type local:TaskItem}">
         <Grid>
             <Grid.ColumnDefinitions>

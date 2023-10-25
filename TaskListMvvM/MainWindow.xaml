@@ -6,8 +6,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskListMvvM"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStyle="None" Style="{StaticResource Window.Style}" AllowsTransparency="True" MouseDown="Window_MouseDown"
-        Loaded="MainWindow_OnLoaded" Closed="MainWindow_OnClosed">
+        Title="MainWindow" Height="450" Width="600" WindowStyle="None" Style="{StaticResource Window.Style}" AllowsTransparency="True" Opacity="0.90" MouseDown="Window_MouseDown"
+        Loaded="MainWindow_OnLoaded" Closed="MainWindow_OnClosed" Icon="/list.ico" StateChanged="Window_StateChanged">
     <Window.DataContext>
         <local:ViewModel/>
     </Window.DataContext>
@@ -18,12 +18,41 @@
             <RowDefinition Height="0.1*"/>
         </Grid.RowDefinitions>
         <UniformGrid Rows="1">
-            <Button Content="Update Status" Command="{Binding UpdateCommand}" Style="{StaticResource Button.Style}"/>
-            <Button Content="Delete" Command="{Binding DeleteCommand}" Style="{StaticResource Button.Style}"/>
-            <Button Content="Clear" Command="{Binding ClearCommand}" Style="{StaticResource Button.Style}"/>
+            <Button Content="🆙" Command="{Binding UpdateCommand}" Style="{StaticResource Button.Style}">
+                <Button.ToolTip>
+                    <ToolTip Style="{StaticResource Button.ToolTip.Style}">
+                        <StackPanel>
+                            <TextBlock Text="Press This button to change status of chosen task."/>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Content="🚮" Command="{Binding DeleteCommand}" Style="{StaticResource Button.Style}">
+                <!--<Button.Background>
+                    <ImageBrush ImageSource="/icons8-delete-50.png"/>
+                </Button.Background>-->
+                <Button.ToolTip>
+                <ToolTip Style="{StaticResource Button.ToolTip.Style}">
+                    <StackPanel>
+                            <TextBlock Text="Press this button to delete chosen task."/>
+                            <TextBlock Text="Also you can to press button Delete on your keyboard."/>
+                        </StackPanel>
+                </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Content="🆑" Command="{Binding ClearCommand}" Style="{StaticResource Button.Style}">
+                <Button.ToolTip>
+                    <ToolTip Style="{StaticResource Button.ToolTip.Style}">
+                        <StackPanel>
+                            <TextBlock Text="Press This button to clear all tasks."/>
+                        </StackPanel>
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
             <StackPanel Style="{StaticResource StackPanel.Style}">
-                <Button x:Name="ButtonHide" Click="ButtonHide_Click" Content="➖" Style="{StaticResource Button.Small.Style}"/>
-                <Button x:Name="ButtonClose" Click="ButtonClose_Click" Content="✖️" Style="{StaticResource Button.Small.Style}"/>
+                <Button x:Name="ButtonHide" Click="ButtonHide_Click" Content="-" Style="{StaticResource Button.Small.Style}"/>
+                <Button x:Name="ButtonSize" Click="Maximize_Click" Content="⬜" Style="{StaticResource Button.Small.Style}"/>
+                <Button x:Name="ButtonClose" Click="ButtonClose_Click" Content="x" Style="{StaticResource Button.Small.Style}"/>
             </StackPanel>
         </UniformGrid>
         <ListBox HorizontalAlignment="Stretch" 
