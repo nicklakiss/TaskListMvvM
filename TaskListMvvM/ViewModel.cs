@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TaskListMvvM
 {
@@ -63,7 +64,7 @@ namespace TaskListMvvM
         {
             if (string.IsNullOrWhiteSpace(Description))
                 return;
-            TaskItemManager.AddTask(new TaskItem { Title = string.Join(" ", Description.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)) });
+            TaskItemManager.AddTask(new TaskItem { Date = DateTime.Today, Title = string.Join(" ", Description.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)) });
             Tasks = new(TaskItemManager.GetTasks());
             Description = string.Empty;
         }
