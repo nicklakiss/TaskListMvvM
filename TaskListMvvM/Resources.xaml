@@ -70,10 +70,12 @@
                 <ColumnDefinition Width="0.05*"/>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="0.05*"/>
+                <ColumnDefinition Width="0.05*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Text="{Binding Id}" FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"/>
             <TextBlock Text="{Binding Title}" FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" Grid.Column="1"/>
-            <Image x:Name="StatusImage"  Grid.Column="2" Source="/gtk-red.png"/>
+            <TextBlock Text="{Binding Date, StringFormat={}{0:dd.MM.yy}}" FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" Margin="0,0,30,0" Grid.Column="2"/>
+            <Image x:Name="StatusImage"  Grid.Column="3" Source="/gtk-red.png"/>
         </Grid>
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding IsCompleted}" Value="True">
